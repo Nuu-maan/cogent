@@ -65,6 +65,10 @@ var providerKeyEnv = map[string]string{
 func Load(path string) (Config, error) {
 	cfg := Default()
 
+	// Make a .env in the working directory available as environment variables
+	// before any env resolution happens. Real environment values take priority.
+	loadDotenv(".env")
+
 	if path != "" {
 		if data, err := os.ReadFile(path); err == nil {
 			if err := json.Unmarshal(data, &cfg); err != nil {
@@ -122,11 +126,19 @@ func (c *Config) applyEnv() {
 }
 
 func (c *Config) resolveAPIKey() {
+	// Precedence: explicit COGENT_API_KEY, then the provider's conventional
+	// variable, then a generic API_KEY for single-key .env setups.
 	if v := os.Getenv("COGENT_API_KEY"); v != "" {
 		c.apiKey = v
 		return
 	}
 	if env := providerKeyEnv[c.Provider]; env != "" {
-		c.apiKey = os.Getenv(env)
+		if v := os.Getenv(env); v != "" {
+			c.apiKey = v
+			return
+		}
+	}
+	if v := os.Getenv("API_KEY"); v != "" {
+		c.apiKey = v
 	}
 }
