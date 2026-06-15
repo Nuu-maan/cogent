@@ -1,0 +1,12 @@
+# Normalize line endings to LF in the repository for all text files.
+* text=auto eol=lf
+
+# Treat Go and Markdown explicitly as LF text.
+*.go    text eol=lf
+*.md    text eol=lf
+*.mod   text eol=lf
+*.json  text eol=lf
+*.yml   text eol=lf
+
+# Makefile must keep LF and tab indentation.
+Makefile text eol=lf
