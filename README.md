@@ -58,6 +58,10 @@ ollama serve &
 ./cogent -p "summarize internal/agent/agent.go"
 ```
 
+Keys can also live in a `.env` file in the working directory (copy
+`.env.example`). A generic `API-KEY=` entry works for whichever provider is
+selected; real environment variables take precedence over `.env`.
+
 ## How it works
 
 The entire agent is this loop, in `internal/agent/agent.go`:
