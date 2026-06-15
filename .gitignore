@@ -1,0 +1,18 @@
+# Binaries
+/cogent
+/cogent.exe
+/dist/
+
+# Local config & secrets
+/cogent.json
+.env
+
+# Go
+*.test
+*.out
+coverage.*
+
+# Editors / OS
+.vscode/
+.idea/
+.DS_Store
